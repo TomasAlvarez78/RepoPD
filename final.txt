@@ -1,0 +1,6 @@
+Programa 
+Juego de cartas 
+con un mazo, sortearlas, y poner las (reglas?)
+(haskell o python funcional)
+
+El dia del examen habra en ejercicios haskell
