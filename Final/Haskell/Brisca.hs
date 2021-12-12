@@ -97,10 +97,8 @@ resTurno :: Carta -> Carta -> Carta -> Int
 resTurno c1 c2 triunfo
     | paloCarta c1 == paloCarta triunfo && paloCarta c2 /= paloCarta triunfo = 1
     | paloCarta c2 == paloCarta triunfo && paloCarta c1 /= paloCarta triunfo = 2
-    | paloCarta c1 == paloCarta triunfo && paloCarta c2 == paloCarta triunfo && venceCarta c1 c2 = 1
-    | paloCarta c1 == paloCarta triunfo && paloCarta c2 == paloCarta triunfo && venceCarta c2 c1 = 2
-    | paloCarta c1 /= paloCarta triunfo && paloCarta c2 /= paloCarta triunfo && venceCarta c1 c2 = 1
-    | paloCarta c1 /= paloCarta triunfo && paloCarta c2 /= paloCarta triunfo && venceCarta c2 c1 = 2
+    | venceCarta c1 c2 = 1
+    | venceCarta c2 c1 = 2
     | otherwise = 0
 
 mostrarCartas :: Jugador -> IO()
