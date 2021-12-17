@@ -23,6 +23,7 @@ module Brisca
 
 import System.Random
 import Data.List
+import System.Process
 
 data Numero = Dos | Cuatro | Cinco | Seis | Siete | Diez | Once | Doce | Tres | Uno deriving (Read, Enum, Eq, Show, Ord)
 
@@ -58,7 +59,7 @@ mezclarMazo mazo = if not (null mazo)
                        else return mazo
 
 -- Funcion que devuelve una tupla de juego
--- La tupla del juego ( JUGADOR1, JUGADOR2, MAZO)
+-- La tupla del juego ( JUGADOR1, JUGADOR2, MAZO, PUNTAJE)
 empezarJuego :: Monad m => m Mazo -> m (Jugador, Jugador, Mazo, Int)
 empezarJuego m =
     do
@@ -81,7 +82,6 @@ eliminarItem a b (x:xs)
 -- Funcion que devuelve una carta, su funcion es devolver la carta de triunfo
 getTriunfo :: Mazo -> Carta
 getTriunfo = head
-
 
 addPuntaje :: Int -> Int -> Int
 addPuntaje pun ganador
@@ -122,9 +122,8 @@ mostrarCartas jug1
 
 ganoTurno :: Int -> IO()
 ganoTurno a
-    | a == 1 = putStrLn "El jugador 1 gano el turno!"
-    | a == 2 = putStrLn "El jugador 2 gano el turno!"
-    | otherwise = putStrLn "Empate!"
+    | a == 0 = putStrLn "Empate!"
+    | otherwise = putStrLn ("El jugador " ++ show a ++ " gano el turno!")
 
 ganoJuego :: Int -> IO()
 ganoJuego puntaje 
@@ -135,6 +134,7 @@ ganoJuego puntaje
 turno :: (Jugador, Jugador, Mazo, Int) -> IO (Jugador, Jugador, Mazo, Int)
 turno (j1,j2,mazo,pun) = do
     
+    system "clear"
 
     putStrLn "============================"
     putStrLn ""
@@ -160,10 +160,14 @@ turno (j1,j2,mazo,pun) = do
     putStrLn ""
     putStrLn "Presione ENTER para continuar..."
     getLine
+    system "clear"
     putStrLn "============================"
     putStrLn ""
 
     putStrLn "Turno del jugador 1: "
+    putStrLn ""
+    putStr "Carta de Triunfo: "
+    print triunfo
     putStrLn ""
     mostrarCartas j1
     putStrLn ""
@@ -176,10 +180,14 @@ turno (j1,j2,mazo,pun) = do
     putStrLn ""
     putStrLn "Presione ENTER para continuar..."
     getLine
-    putStrLn "---------------------------"
+    system "clear"
+    putStrLn "============================"
     putStrLn ""
 
     putStrLn "Turno del jugador 2: "
+    putStrLn ""
+    putStr "Carta de Triunfo: "
+    print triunfo
     putStrLn ""
     mostrarCartas j2
     putStrLn ""
@@ -191,7 +199,7 @@ turno (j1,j2,mazo,pun) = do
     print(j2 !! carta2)
 
     putStrLn ""
-    putStrLn "---------------------------"
+    putStrLn "============================"
 
     let ganador = resTurno (j1 !! carta1) (j2 !! carta2) triunfo
     let j1' = descartarCartasJug j1 carta1
@@ -201,6 +209,12 @@ turno (j1,j2,mazo,pun) = do
 
     putStrLn ""
     ganoTurno ganador
+
+    putStrLn ""
+    putStrLn "Presione ENTER para continuar..."
+    getLine
+    system "clear"
+    putStrLn ""
 
     if not (null j1')
         then turno (j1',j2',mazo',pun')

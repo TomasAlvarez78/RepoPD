@@ -41,17 +41,9 @@ class MazoEspanol:
     def mezclarMazo(self):
         if len(self.mazo) > 1:
             random.shuffle(self.mazo)
-        
-    def dar3Cartas(self):
-        if len(self.mazo) > 2:
-            cartasJugador = self.mazo[len(self.mazo)-3:len(self.mazo)]
-            return cartasJugador
+    
+    def darCartas(self,i):
+        return self.mazo[-i:]
 
-    def descartarCartas(self,cartas):
-        if len(self.mazo) > 1 and len(cartas) > 0:
-            self.mazo.remove(cartas[0])
-            if len(cartas) > 0:
-                self.descartarCartas(cartas[1:])
-
-    def getTriunfo(self):
-        return self.mazo.pop()
+    def descartarCartas(self,i):
+        self.mazo = self.mazo[:len(self.mazo) - i]

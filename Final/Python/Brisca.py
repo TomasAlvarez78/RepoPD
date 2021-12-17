@@ -63,19 +63,19 @@ class Brisca:
         self.mazo.mezclarMazo()
         
         # ! REPARTO DE CARTAS DEL JUGADOR 1
-        self.jug1 = Jugador(self.mazo.dar3Cartas())
+        self.jug1 = Jugador(self.mazo.darCartas(3))
         print("Cartas del jugador 1:")
         self.jug1.mostrarCartas()
-        self.mazo.descartarCartas(self.jug1.getCartas())
+        self.mazo.descartarCartas(3)
         
         # ! REPARTO DE CARTAS DEL JUGADOR 1
-        self.jug2 = Jugador(self.mazo.dar3Cartas())
+        self.jug2 = Jugador(self.mazo.darCartas(3))
         print("Cartas del jugador 2:")
         self.jug2.mostrarCartas()
-        self.mazo.descartarCartas(self.jug2.getCartas())
+        self.mazo.descartarCartas(3)
         
         # ! Extraccion de Triunfo
-        self.cartaTriunfo = self.mazo.getTriunfo()
+        self.cartaTriunfo = self.mazo.darCartas(1)[0]
         print("Carta de Triunfo:",self.cartaTriunfo)
         input("Presione ENTER para continuar...")
 
@@ -138,7 +138,7 @@ class Brisca:
 
     def ganoTurno(self,ganador):
         if ganador > 0:
-            print("El turno lo gano el jugador {0}".format(ganador))
+            print(f"El turno lo gano el jugador {ganador}")
         else:
             print("El turno termino en empate")
 
